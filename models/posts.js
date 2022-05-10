@@ -16,7 +16,7 @@ const postSchema = new mongoose.Schema(
     },
     content: {
       type: String,
-      require: [ true, '內容不得為空']
+      required: [ true, '內容不得為空']
     },
     image: {
       type: String, 

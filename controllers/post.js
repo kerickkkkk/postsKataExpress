@@ -48,8 +48,8 @@ const patchPost = async function(req, res, next){
     try {
         const {id} = req.params
         const params = req.body
-        if( id ){
-            const result = await Post.findByIdAndUpdate(id, params)
+        if( id && params.content && params.name){
+            const result = await Post.findByIdAndUpdate(id, params, { runValidators: true  , new: true })
             successHandler(res, result)
         }else{
             errorHandler(res, 400, 'ID 或 內容有誤')
