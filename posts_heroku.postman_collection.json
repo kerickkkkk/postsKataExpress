@@ -126,7 +126,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://posts-kata.herokuapp.com/posts",
+			"value": "https://postkataexpress.herokuapp.com/posts",
 			"type": "string"
 		}
 	]
