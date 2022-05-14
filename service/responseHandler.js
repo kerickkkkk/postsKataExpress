@@ -7,7 +7,7 @@ const successHandler = ( res, data) => {
 }
 
 const errorHandler = (res, statusCode = 500 , message = '有錯誤') => {
-  res.status(statusCode).write({
+  res.status(statusCode).send({
     status : 'false',
     message
   }).end()
