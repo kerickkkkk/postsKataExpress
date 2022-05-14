@@ -15,6 +15,7 @@ const postPost = async function(req, res, next){
         const { name, content } = params
         if( !name || !content) {
             errorHandler( res, 400, '姓名 或者 內容不得為空')
+            return false
         }
         const result = await Post.create( params )
         successHandler(res, result)
@@ -34,29 +35,39 @@ const deletePosts = async function(req, res, next){
 const deletePost = async function(req, res, next){
     try {
         const {id} = req.params
-        if( id ){
-            await Post.findByIdAndDelete(id)
-            successHandler(res, `已刪除ID : ${ id}`)
-        }else{
-            errorHandler(res, 400, 'ID有誤')
+        const findId = await Post.findOne({_id: {$in:[id]}})
+        if(findId === null){
+            errorHandler(res, 404, '沒有該 Id')
+            return false 
         }
+        const {_id} = await Post.findOneAndDelete({_id: id}, { runValidators: true  , new: true })
+        successHandler(res, `已刪除ID : ${ _id}`)
     } catch (error) {
         errorHandler(res, 404, '查無此ID')
     }
 }
 const patchPost = async function(req, res, next){
     try {
-        const {id} = req.params
-        const params = req.body
-        if( id && params.content && params.name){
-            const result = await Post.findByIdAndUpdate(id, params, { runValidators: true  , new: true })
-            successHandler(res, result)
-        }else{
-            errorHandler(res, 400, 'ID 或 內容有誤')
+        const {id} = req.params 
+        // 發現用 findOne 會找到相似的 id 目前先用這個方式 不確定有其他的方式可以比對百分之百的 id
+        const findId = await Post.findOne({_id: {$in:[id]}})
+        if(findId === null){
+            errorHandler(res, 404, '沒有該 Id')
+            return false 
         }
+        const paramAry = ['name', 'avatar', 'content', 'image']
+        const params = paramAry.reduce((prev, next) => {
+            if(req.body[next]){
+                prev[next] = req.body[next]
+            }
+            return prev
+        },{})
+
+        const result = await Post.findByIdAndUpdate(id, params, { runValidators: true  , new: true })
+        successHandler(res, result)
 
     } catch (error) {
-        errorHandler(res, 400, error)
+        errorHandler(res, 400, '有一些錯誤')
     }
 }
 
