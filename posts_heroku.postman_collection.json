@@ -29,7 +29,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\" : \"qq2\",\r\n    \"avatar\" : \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\",\r\n    \"content\" : \"第 2 筆\",\r\n    \"image\": \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\"\r\n}",
+					"raw": "{\r\n    \"name\" : \"q2\",\r\n    \"avatar\" : \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\",\r\n    \"content\" : \"第 2 筆\",\r\n    \"image\": \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -65,12 +65,12 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{base_url}}/984bb42e-c445-419b-88a4-575c2cf98d92",
+					"raw": "{{base_url}}/627f154e6c089bf7f43a14a1",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"984bb42e-c445-419b-88a4-575c2cf98d92"
+						"627f154e6c089bf7f43a14a1"
 					]
 				}
 			},
@@ -83,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"title\": \"111\"\r\n}",
+					"raw": "{\r\n    \"name\": \"111\",\r\n    \"avatar\": \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387\",\r\n    \"content\": 12345\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -91,12 +91,12 @@
 					}
 				},
 				"url": {
-					"raw": "{{base_url}}/d60b140f-20ef-4b1a-9e8c-f2e0fcaf8395",
+					"raw": "{{base_url}}/627f0ee0f49252fdd72f6ffa",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"d60b140f-20ef-4b1a-9e8c-f2e0fcaf8395"
+						"627f0ee0f49252fdd72f6ffa"
 					]
 				}
 			},
@@ -124,6 +124,12 @@
 		}
 	],
 	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:3000/posts",
+			"type": "string",
+			"disabled": true
+		},
 		{
 			"key": "base_url",
 			"value": "https://postkataexpress.herokuapp.com/posts",
