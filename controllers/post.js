@@ -2,6 +2,28 @@ const { log } = require('debug/src/node')
 const Post = require('../models/posts')
 const {successHandler, errorHandler } = require('../service/responseHandler')
 const getPost = async function(req, res, next) {
+    /*
+        #swagger.tags = ['Posts - 貼文']
+        #swagger.description = '這是取得全部貼文'
+        #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema:
+                {
+                    "status": "success",
+                    "data": [
+                        {
+                        "_id": "627f4397ec70054e1b5d05bf",
+                        "name": "heroku",
+                        "avatar": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                        "content": "第 2 筆",
+                        "image": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                        "likes": 0,
+                        "createdAt": "2022-05-14T05:52:23.719Z"
+                        }
+                    ]
+                }
+        }
+    */
     try {
         const posts =  await Post.find({})
         successHandler(res, posts)
@@ -10,6 +32,39 @@ const getPost = async function(req, res, next) {
     }
 }
 const postPost = async function(req, res, next){
+    /*
+        #swagger.tags = ['Posts - 貼文']
+        #swagger.description = '新增全部貼文'
+        #swagger.parameters:['body'] = {
+            in: 'body',
+            type: 'object',
+            description: '資料格式',
+            required : true,
+            schema:{
+                $name: 'Eric',
+                $content : '這個是內容',
+                avatar: '這個是非必填'
+            }
+        }
+        #swagger.responses[200] = {
+            description: '貼文資訊',
+            schema:
+                {
+                    "status": "success",
+                    "data": [
+                        {
+                        "_id": "627f4397ec70054e1b5d05bf",
+                        "name": "heroku",
+                        "avatar": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                        "content": "第 2 筆",
+                        "image": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
+                        "likes": 0,
+                        "createdAt": "2022-05-14T05:52:23.719Z"
+                        }
+                    ]
+                }
+        }
+    */
     try {
         const params = req.body
         const { name, content } = params
@@ -47,6 +102,12 @@ const deletePost = async function(req, res, next){
     }
 }
 const patchPost = async function(req, res, next){
+    /*
+        #swagger.tags = ['Posts - 貼文']
+        #swagger.security = [{
+            apiKeyAuth : []
+        }]
+    */
     try {
         const {id} = req.params 
         // 發現用 findOne 會找到相似的 id 目前先用這個方式 不確定有其他的方式可以比對百分之百的 id

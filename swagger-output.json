@@ -1,0 +1,227 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Swagger 測試中",
+    "description": "Swagger test Description"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "headers",
+      "name": "authorization",
+      "description": "請加上 API Token"
+    }
+  },
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/posts/": {
+      "get": {
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "這是取得全部貼文",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "627f4397ec70054e1b5d05bf"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "heroku"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "第 2 筆"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-14T05:52:23.719Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "新增全部貼文",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Eric"
+                },
+                "content": {
+                  "type": "string",
+                  "example": "這個是內容"
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "這個是非必填"
+                }
+              },
+              "required": [
+                "name",
+                "content"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "貼文資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "627f4397ec70054e1b5d05bf"
+                      },
+                      "name": {
+                        "type": "string",
+                        "example": "heroku"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                      },
+                      "content": {
+                        "type": "string",
+                        "example": "第 2 筆"
+                      },
+                      "image": {
+                        "type": "string",
+                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                      },
+                      "likes": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "createdAt": {
+                        "type": "string",
+                        "example": "2022-05-14T05:52:23.719Z"
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {}
+      }
+    },
+    "/posts/{id}": {
+      "delete": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {}
+      },
+      "patch": {
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {},
+        "security": [
+          {
+            "apiKeyAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {}
+}
