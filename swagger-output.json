@@ -30,6 +30,125 @@
         "responses": {}
       }
     },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Users - 使用者"
+        ],
+        "description": "這是取得全部貼文",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "使用者資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "test"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "test@test.com"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "example": ""
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Users - 使用者"
+        ],
+        "description": "新增使用者",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "type": "object",
+            "description": "資料格式",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "email@email.com"
+                },
+                "avatar": {
+                  "type": "string",
+                  "example": "這個是非必填"
+                }
+              },
+              "required": [
+                "name",
+                "email"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "使用者資訊",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "example": "success"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "example": "test"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "test@test.com"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "example": ""
+                      }
+                    }
+                  }
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          }
+        }
+      }
+    },
     "/posts/": {
       "get": {
         "tags": [

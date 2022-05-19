@@ -1,5 +1,5 @@
 const { log } = require('debug/src/node')
-const Post = require('../models/posts')
+const Post = require('../models/post')
 const {successHandler, errorHandler } = require('../service/responseHandler')
 const getPost = async function(req, res, next) {
     /*

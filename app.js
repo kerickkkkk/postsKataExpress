@@ -7,8 +7,8 @@ const swaggerUI = require('swagger-ui-express')
 const swaggerFile = require('./swagger-output.json')
 
 const indexRouter = require('./routes/index');
-// const usersRouter = require('./routes/users');
-const postRouter = require('./routes/post')
+const usersRouter = require('./routes/users');
+const postsRouter = require('./routes/posts')
 
 const connection = require('./connection/index.js');
 connection()
@@ -23,8 +23,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-// app.use('/users', usersRouter);
-app.use('/posts', postRouter)
+app.use('/users', usersRouter);
+app.use('/posts', postsRouter)
 app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerFile))
 
 
