@@ -6,7 +6,7 @@ const doc = {
         description: "Swagger test Description"
     },
     // 要注意換過去 heroku 要換 或者要改用 env
-    host: "localhost:3000",
+    host: "process.env.SWAGGERHOST",
     schemes: ['http','https'],
     securityDefinitions:{
         apiKeyAuth: {

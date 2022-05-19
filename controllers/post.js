@@ -1,5 +1,6 @@
 const { log } = require('debug/src/node')
 const Post = require('../models/post')
+const User = require('../models/users')
 const {successHandler, errorHandler } = require('../service/responseHandler')
 const getPost = async function(req, res, next) {
     /*
@@ -34,16 +35,16 @@ const getPost = async function(req, res, next) {
 const postPost = async function(req, res, next){
     /*
         #swagger.tags = ['Posts - 貼文']
-        #swagger.description = '新增全部貼文'
+        #swagger.description = '新增貼文'
         #swagger.parameters:['body'] = {
             in: 'body',
             type: 'object',
             description: '資料格式',
             required : true,
             schema:{
-                $name: 'Eric',
+                $user: '6286523ded1afb268771d4bd',
                 $content : '這個是內容',
-                avatar: '這個是非必填'
+                image: '圖片不一定要傳',
             }
         }
         #swagger.responses[200] = {
@@ -53,8 +54,7 @@ const postPost = async function(req, res, next){
                     "status": "success",
                     "data": [
                         {
-                        "_id": "627f4397ec70054e1b5d05bf",
-                        "name": "heroku",
+                        "user": "6286523ded1afb268771d4bd",
                         "avatar": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
                         "content": "第 2 筆",
                         "image": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
@@ -67,13 +67,24 @@ const postPost = async function(req, res, next){
     */
     try {
         const params = req.body
-        const { name, content } = params
-        if( !name || !content) {
+        const { user :userId , content ,image = ''} = params
+        if( !userId || !content) {
             errorHandler( res, 400, '姓名 或者 內容不得為空')
             return false
         }
-        const result = await Post.create( params )
+        const userData = await User.findOne( { _id : userId} )
+        if( userData === null ){
+            errorHandler( res, 404, '沒有該使用者 ID')
+            return false
+        }
+
+        const result = await Post.create( {
+            user : userId ,
+            content,
+            image: image ? image : '',
+        } )
         successHandler(res, result)
+
     } catch (error) {
         errorHandler( res, 500, '伺服器有誤')
     }

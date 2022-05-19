@@ -25,12 +25,13 @@ const postSchema = new mongoose.Schema(
     },
     // 被按讚
     likes: {
-      type: String,
-      default: [String]
+      type: [String],
+      default: []
     },
     createdAt:{
       type: Date,
       default: Date.now,
+      select: false
     },
   },
   {

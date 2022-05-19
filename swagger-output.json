@@ -214,7 +214,7 @@
         "tags": [
           "Posts - 貼文"
         ],
-        "description": "新增全部貼文",
+        "description": "新增貼文",
         "parameters": [
           {
             "name": "body",
@@ -225,21 +225,21 @@
             "schema": {
               "type": "object",
               "properties": {
-                "name": {
+                "user": {
                   "type": "string",
-                  "example": "Eric"
+                  "example": "6286523ded1afb268771d4bd"
                 },
                 "content": {
                   "type": "string",
                   "example": "這個是內容"
                 },
-                "avatar": {
+                "image": {
                   "type": "string",
-                  "example": "這個是非必填"
+                  "example": "圖片不一定要傳"
                 }
               },
               "required": [
-                "name",
+                "user",
                 "content"
               ]
             }
@@ -262,11 +262,7 @@
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "example": "627f4397ec70054e1b5d05bf"
-                      },
-                      "name": {
-                        "type": "string",
-                        "example": "heroku"
+                        "example": "6286523ded1afb268771d4bd"
                       },
                       "avatar": {
                         "type": "string",
