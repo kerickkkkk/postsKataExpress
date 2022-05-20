@@ -6,101 +6,168 @@
 	},
 	"item": [
 		{
-			"name": "取得所有 posts",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}",
-					"host": [
-						"{{base_url}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "新增單筆 post",
-			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {}
-			},
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\" : \"q2\",\r\n    \"avatar\" : \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\",\r\n    \"content\" : \"第 2 筆\",\r\n    \"image\": \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80\"\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "使用者 users",
+			"item": [
+				{
+					"name": "取得所有 user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users"
+							]
 						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{base_url}}",
-					"host": [
-						"{{base_url}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "刪除所有 posts",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}",
-					"host": [
-						"{{base_url}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "刪除單一 post",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{base_url}}/627f154e6c089bf7f43a14a1",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"627f154e6c089bf7f43a14a1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "修改 post",
-			"request": {
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"name\": \"111\",\r\n    \"avatar\": \"https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387\",\r\n    \"content\": 12345\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+				{
+					"name": "新增 user",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"6286d9a682e43469e9c657f8\",\r\n  \"content\": \"測試內容\",\r\n  \"image\": \"圖片不一定要傳\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{base_url}}/627f0ee0f49252fdd72f6ffa",
-					"host": [
-						"{{base_url}}"
-					],
-					"path": [
-						"627f0ee0f49252fdd72f6ffa"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
+		},
+		{
+			"name": "文章 posts",
+			"item": [
+				{
+					"name": "取得所有 posts",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增單筆 post",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"user\": \"6286d9a682e43469e9c657f8\",\r\n  \"content\": \"測試二號\",\r\n  \"image\": \"圖片不一定要傳\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除所有 posts",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "刪除單一 post",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts/6287c683d80cffc3b5a59ba5",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"6287c683d80cffc3b5a59ba5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "修改 post",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"image\": \"555\",\r\n    \"content\": 12345\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/6287c8b6bb3fa85099d6da50",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"6287c8b6bb3fa85099d6da50"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
 	"event": [
@@ -126,13 +193,13 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://127.0.0.1:3000/posts",
+			"value": "http://127.0.0.1:3000",
 			"type": "string",
 			"disabled": true
 		},
 		{
 			"key": "base_url",
-			"value": "https://postkataexpress.herokuapp.com/posts",
+			"value": "https://postkataexpress.herokuapp.com",
 			"type": "string"
 		}
 	]
