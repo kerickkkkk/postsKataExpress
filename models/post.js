@@ -33,6 +33,10 @@ const postSchema = new mongoose.Schema(
       default: Date.now,
       select: false
     },
+    updatedAt:{
+      type: Date,
+      default: Date.now,
+    },
   },
   {
     versionKey: false

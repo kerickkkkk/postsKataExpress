@@ -4,7 +4,6 @@
     "title": "Swagger 測試中",
     "description": "Swagger test Description"
   },
-  "host": "localhost:3000",
   "basePath": "/",
   "tags": [],
   "schemes": [
@@ -262,27 +261,23 @@
                     "properties": {
                       "_id": {
                         "type": "string",
-                        "example": "6286523ded1afb268771d4bd"
+                        "example": "628669afb29d167f03a74412"
                       },
-                      "avatar": {
+                      "user": {
                         "type": "string",
-                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                        "example": "6286523ded1afb268771d4bd"
                       },
                       "content": {
                         "type": "string",
-                        "example": "第 2 筆"
+                        "example": "AAAAAA"
                       },
                       "image": {
                         "type": "string",
-                        "example": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80"
+                        "example": "圖片不一定要傳"
                       },
                       "likes": {
-                        "type": "number",
-                        "example": 0
-                      },
-                      "createdAt": {
-                        "type": "string",
-                        "example": "2022-05-14T05:52:23.719Z"
+                        "type": "array",
+                        "items": {}
                       }
                     }
                   }
@@ -296,16 +291,20 @@
         }
       },
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "這是刪除全部貼文",
         "parameters": [],
         "responses": {}
       }
     },
     "/posts/{id}": {
       "delete": {
-        "tags": [],
-        "description": "",
+        "tags": [
+          "Posts - 貼文"
+        ],
+        "description": "這是刪除全部貼文",
         "parameters": [
           {
             "name": "id",

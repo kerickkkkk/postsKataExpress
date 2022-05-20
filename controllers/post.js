@@ -26,7 +26,10 @@ const getPost = async function(req, res, next) {
         }
     */
     try {
-        const posts =  await Post.find({})
+        const posts =  await Post.find({}).populate({
+            path: 'user',
+            select: 'name avatar'
+        })
         successHandler(res, posts)
     } catch (error) {
         errorHandler(res, 400, )
@@ -54,12 +57,11 @@ const postPost = async function(req, res, next){
                     "status": "success",
                     "data": [
                         {
-                        "user": "6286523ded1afb268771d4bd",
-                        "avatar": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                        "content": "第 2 筆",
-                        "image": "https://images.unsplash.com/photo-1650493102777-cf317788cc95?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
-                        "likes": 0,
-                        "createdAt": "2022-05-14T05:52:23.719Z"
+                            "_id": "628669afb29d167f03a74412",
+                            "user": "6286523ded1afb268771d4bd",
+                            "content": "AAAAAA",
+                            "image": "圖片不一定要傳",
+                            "likes": []
                         }
                     ]
                 }
@@ -91,6 +93,10 @@ const postPost = async function(req, res, next){
 }
 
 const deletePosts = async function(req, res, next){
+     /*
+        #swagger.tags = ['Posts - 貼文']
+        #swagger.description = '這是刪除全部貼文'
+    */
     try {
         await Post.deleteMany({})
         successHandler( res, `已刪除 全部 Posts`)
@@ -99,6 +105,10 @@ const deletePosts = async function(req, res, next){
     }
 }
 const deletePost = async function(req, res, next){
+    /*
+        #swagger.tags = ['Posts - 貼文']
+        #swagger.description = '這是刪除 單筆 貼文'
+    */
     try {
         const {id} = req.params
         const findId = await Post.findOne({_id: {$in:[id]}})
