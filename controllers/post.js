@@ -26,13 +26,13 @@ const getPost = async function(req, res, next) {
         }
     */
     try {
-        const posts =  await Post.find({}).populate({
+        const posts =  await Post.find().populate({
             path: 'user',
             select: 'name avatar'
         })
         successHandler(res, posts)
     } catch (error) {
-        errorHandler(res, 400, )
+        errorHandler(res, 400)
     }
 }
 const postPost = async function(req, res, next){
