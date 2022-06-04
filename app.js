@@ -52,7 +52,7 @@ app.use(function(err, req, res, next) {
     if (err.name === 'ValidationError'){
         err.message = "資料欄位未填寫正確，請重新輸入！"
         err.isOperational = true;
-        return s(err, res)
+        return (err, res)
     }
     resErrorProd(err, res)
 });

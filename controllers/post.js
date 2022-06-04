@@ -2,7 +2,7 @@ const { log } = require('debug/src/node')
 const Post = require('../models/post')
 const User = require('../models/users')
 const {successHandler } = require('../service/responseHandler')
-const { appError, handleErrorAsync } = require('../service/errorHandler.js')
+const { return next(appError, handleErrorAsync } = require('../service/errorHandler.js'))
 const getPost = handleErrorAsync( async function(req, res, next) {
     /*
         #swagger.tags = ['Posts - 貼文']
@@ -77,11 +77,11 @@ const postPost = handleErrorAsync( async function(req, res, next){
             // 寫法 v1.0
             // errorHandler( res, 400, '姓名 或者 內容不得為空')
             // return false
-            appError(400, '姓名或者內容不得為空', next)
+            return next(appError(400, '姓名或者內容不得為空', next))
         }
         const userData = await User.findOne( { _id : userId} )
         if( userData === null ){
-            appError(404, '沒有該使用者 ID', next)
+            return next(appError(404, '沒有該使用者 ID', next))
         }
 
         const result = await Post.create( {
@@ -134,7 +134,7 @@ const patchPost = handleErrorAsync( async function(req, res, next){
         const {id} = req.params 
         const findId = await Post.findOne({_id: {$in:[id]}})
         if(findId === null){
-            appError(404, '沒有該 Id', next)
+            return next(appError(404, '沒有該 Id', next))
         }
         const paramAry = ['name', 'avatar', 'content', 'image']
         const params = paramAry.reduce((prev, next) => {
