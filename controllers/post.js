@@ -1,8 +1,9 @@
 const { log } = require('debug/src/node')
 const Post = require('../models/post')
 const User = require('../models/users')
-const {successHandler, errorHandler } = require('../service/responseHandler')
-const getPost = async function(req, res, next) {
+const {successHandler } = require('../service/responseHandler')
+const { appError, handleErrorAsync } = require('../service/errorHandler.js')
+const getPost = handleErrorAsync( async function(req, res, next) {
     /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.description = '這是取得全部貼文'
@@ -25,17 +26,18 @@ const getPost = async function(req, res, next) {
                 }
         }
     */
-    try {
+    // try {
         const posts =  await Post.find().populate({
             path: 'user',
             select: 'name avatar'
         })
         successHandler(res, posts)
-    } catch (error) {
-        errorHandler(res, 400)
-    }
-}
-const postPost = async function(req, res, next){
+    // } catch (error) {
+    //     errorHandler(res, 400)
+    // }
+})
+
+const postPost = handleErrorAsync( async function(req, res, next){
     /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.description = '新增貼文'
@@ -67,17 +69,19 @@ const postPost = async function(req, res, next){
                 }
         }
     */
-    try {
+    // handleErrorAsync 集中 try catch 
+    // try {
         const params = req.body
         const { user :userId , content ,image = ''} = params
         if( !userId || !content) {
-            errorHandler( res, 400, '姓名 或者 內容不得為空')
-            return false
+            // 寫法 v1.0
+            // errorHandler( res, 400, '姓名 或者 內容不得為空')
+            // return false
+            appError(400, '姓名或者內容不得為空', next)
         }
         const userData = await User.findOne( { _id : userId} )
         if( userData === null ){
-            errorHandler( res, 404, '沒有該使用者 ID')
-            return false
+            appError(404, '沒有該使用者 ID', next)
         }
 
         const result = await Post.create( {
@@ -87,29 +91,29 @@ const postPost = async function(req, res, next){
         } )
         successHandler(res, result)
 
-    } catch (error) {
-        errorHandler( res, 500, '伺服器有誤')
-    }
-}
+    // } catch (error) {
+    //     errorHandler( res, 500, '伺服器有誤')
+    // }
+})
 
-const deletePosts = async function(req, res, next){
+const deletePosts = handleErrorAsync( async function(req, res, next){
      /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.description = '這是刪除全部貼文'
     */
-    try {
+    // try {
         await Post.deleteMany({})
         successHandler( res, `已刪除 全部 Posts`)
-    } catch (error) {
-        errorHandler( res, 500, '有一些錯誤')
-    }
-}
-const deletePost = async function(req, res, next){
+    // } catch (error) {
+    //     errorHandler( res, 500, '有一些錯誤')
+    // }
+})
+const deletePost = handleErrorAsync( async function(req, res, next){
     /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.description = '這是刪除 單筆 貼文'
     */
-    try {
+
         const {id} = req.params
         const findId = await Post.findOne({_id: {$in:[id]}})
         if(findId === null){
@@ -118,24 +122,19 @@ const deletePost = async function(req, res, next){
         }
         const {_id} = await Post.findOneAndDelete({_id: id}, { runValidators: true  , new: true })
         successHandler(res, `已刪除ID : ${ _id}`)
-    } catch (error) {
-        errorHandler(res, 404, '查無此ID')
-    }
-}
-const patchPost = async function(req, res, next){
+
+})
+const patchPost = handleErrorAsync( async function(req, res, next){
     /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.security = [{
             apiKeyAuth : []
         }]
     */
-    try {
         const {id} = req.params 
-        // 發現用 findOne 會找到相似的 id 目前先用這個方式 不確定有其他的方式可以比對百分之百的 id
         const findId = await Post.findOne({_id: {$in:[id]}})
         if(findId === null){
-            errorHandler(res, 404, '沒有該 Id')
-            return false 
+            appError(404, '沒有該 Id', next)
         }
         const paramAry = ['name', 'avatar', 'content', 'image']
         const params = paramAry.reduce((prev, next) => {
@@ -148,10 +147,7 @@ const patchPost = async function(req, res, next){
         const result = await Post.findByIdAndUpdate(id, params, { runValidators: true  , new: true })
         successHandler(res, result)
 
-    } catch (error) {
-        errorHandler(res, 400, '有一些錯誤')
-    }
-}
+})
 
 
 module.exports = {

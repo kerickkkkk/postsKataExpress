@@ -1,6 +1,7 @@
 const User = require('../models/users')
 const {successHandler, errorHandler } = require('../service/responseHandler')
-const getUsers = async function(req, res, next) {
+const {handleErrorAsync} = require('../service/errorHandler')
+const getUsers = handleErrorAsync(async function(req, res, next) {
     /*
         #swagger.tags = ['Users - 使用者']
         #swagger.description = '這是取得全部貼文'
@@ -19,15 +20,13 @@ const getUsers = async function(req, res, next) {
                 }
         }
     */
-    try {
+
         const users =  await User.find({})
         successHandler(res, users)
-    } catch (error) {
-        errorHandler(res, 400, )
-    }
-}
 
-const postUser = async function(req, res, next) {
+})
+
+const postUser = handleErrorAsync(async function(req, res, next) {
     /*
         #swagger.tags = ['Users - 使用者']
         #swagger.description = '新增使用者'
@@ -57,16 +56,14 @@ const postUser = async function(req, res, next) {
                 }
         }
     */
-    try {
+
         const {name, email, avatar = ''} = req.body
         const result = await User.create({
             name, email, avatar
         })
         successHandler(res, result) 
-    } catch (error) {
-        errorHandler(res, 500 )
-    }
-}
+
+})
 
 module.exports = {
     getUsers,
