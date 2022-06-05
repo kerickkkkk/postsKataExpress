@@ -8,6 +8,7 @@ router.post('/signUp', userControllers.signUp)
 router.post('/signIn', userControllers.signIn)
 
 router.get('/profile', isAuth , userControllers.getProfile)
+router.patch('/profile', isAuth, userControllers.updateProfile)
 router.patch('/updatePassword', isAuth, userControllers.updatePassword)
 
 

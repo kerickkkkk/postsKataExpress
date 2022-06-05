@@ -149,10 +149,42 @@ const updatePassword = handleErrorAsync(async function(req, res, next) {
     jwtGenerator( user, 200, res )
 })
 
+const updateProfile = handleErrorAsync(async function(req, res, next) {
+    const { name, avatar, gender } = req.body
+
+    if( !name ) {
+        return next(appError( 400, '名稱不得全為空', next))
+    }
+
+    // 這邊不知道有沒有比較好的處理方式
+    // 目的是先過濾如果沒有值就不寫入
+    const params = {}
+
+    params.name = name
+
+    if ( avatar ){
+        params.avatar = avatar
+    }
+
+    if( gender ) {
+        params.gender = gender
+    }
+
+    const user = await User.findByIdAndUpdate(req.user.id, 
+        params, {
+        runValidators: true,
+        new: true,
+    })
+    
+    successHandler(res, user)
+
+})
+
 module.exports = {
     getUsers,
     signUp,
     signIn,
     getProfile,
-    updatePassword
+    updatePassword,
+    updateProfile,
 }
