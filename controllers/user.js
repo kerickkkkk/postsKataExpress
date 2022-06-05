@@ -125,11 +125,13 @@ const signIn = handleErrorAsync(async function(req, res, next) {
     jwtGenerator( user , 200, res )
 
 })
-
+const getProfile = handleErrorAsync(async function(req, res, next) {
+    successHandler( res, req.user)
+})
 
 module.exports = {
     getUsers,
     signUp,
-    signIn
-
+    signIn,
+    getProfile
 }
