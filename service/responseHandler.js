@@ -1,6 +1,6 @@
 const successHandler = ( res, data) => {
   // status 200 預設
-  res.send({
+  res.status(200).send({
     status : "success",
     data
   }).end()

@@ -2,7 +2,7 @@ const { log } = require('debug/src/node')
 const Post = require('../models/post')
 const User = require('../models/users')
 const {successHandler } = require('../service/responseHandler')
-const { return next(appError, handleErrorAsync } = require('../service/errorHandler.js'))
+const { appError, handleErrorAsync } = require('../service/errorHandler.js')
 const getPost = handleErrorAsync( async function(req, res, next) {
     /*
         #swagger.tags = ['Posts - 貼文']

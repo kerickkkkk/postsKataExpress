@@ -1,6 +1,9 @@
+const bcrypt = require('bcryptjs')
+const validator = require('validator')
 const User = require('../models/users')
 const {successHandler, errorHandler } = require('../service/responseHandler')
-const {handleErrorAsync} = require('../service/errorHandler')
+const {handleErrorAsync, appError} = require('../service/errorHandler')
+const { jwtGenerator } = require('../service/auth')
 const getUsers = handleErrorAsync(async function(req, res, next) {
     /*
         #swagger.tags = ['Users - 使用者']
@@ -26,7 +29,8 @@ const getUsers = handleErrorAsync(async function(req, res, next) {
 
 })
 
-const postUser = handleErrorAsync(async function(req, res, next) {
+const signUp = handleErrorAsync(async function(req, res, next) {
+
     /*
         #swagger.tags = ['Users - 使用者']
         #swagger.description = '新增使用者'
@@ -56,17 +60,50 @@ const postUser = handleErrorAsync(async function(req, res, next) {
                 }
         }
     */
+    const {name, email, password, confirmPassword} = req.body
 
-        const {name, email, avatar = ''} = req.body
-        const result = await User.create({
-            name, email, avatar
-        })
-        successHandler(res, result) 
+    // 驗證是否為空
+    if( !name || !email || !password || !confirmPassword){
+        return next(appError(400,'欄位填寫有誤', next))
+    }
+
+    // 密碼是否相同
+    if( password !== confirmPassword){
+        return next(appError(400, '密碼不同', next))
+    }
+
+    // 密碼需八碼以上
+    if(!validator.isLength(password, {min:8})){
+        return next(appError(400, '密碼長度不得低於 8 碼', next))
+    }
+
+    if(!validator.isEmail(email)){
+        return next(appError(400, 'email 格式錯誤', next))
+    }
+
+    // 通過
+
+    // 密碼加密
+    const bcryptPassword = await bcrypt.hash( password, 12)
+    
+    // 創建使用者
+    const newUser = await User.create({
+        name, email, 
+        password : bcryptPassword, 
+    })
+
+    jwtGenerator( newUser, 200, res )
 
 })
 
+const signIn = handleErrorAsync(async function(req, res, next) {
+    const compareResult = await bcrypt.compare('aa1a', bcryptPassWord)
+})
+
+
 module.exports = {
     getUsers,
-    postUser
+    signUp,
+    signIn
 
 }
