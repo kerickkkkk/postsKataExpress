@@ -129,9 +129,30 @@ const getProfile = handleErrorAsync(async function(req, res, next) {
     successHandler( res, req.user)
 })
 
+const updatePassword = handleErrorAsync(async function(req, res, next) {
+    const { password, confirmPassword } = req.body
+
+    if( !password || !confirmPassword) {
+        return next(appError( 400, '密碼不得為空', next))
+    }
+
+    if( password !== confirmPassword){
+        return next(appError( 400, '密碼不同', next ))
+    }
+
+    const newPassword = await bcrypt.hash( password, 12)
+
+    const user = User.findOneAndUpdate(req.user.id,{
+        password : newPassword
+    })
+
+    jwtGenerator( user, 200, res )
+})
+
 module.exports = {
     getUsers,
     signUp,
     signIn,
-    getProfile
+    getProfile,
+    updatePassword
 }

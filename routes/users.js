@@ -8,10 +8,7 @@ router.post('/signUp', userControllers.signUp)
 router.post('/signIn', userControllers.signIn)
 
 router.get('/profile', isAuth , userControllers.getProfile)
-// router.post('/', userControllers.signUp);
-// router.delete('/', userControllers.deletePosts);
-// router.delete('/:id', userControllers.deletePost);
-// router.patch('/:id', userControllers.patchPost);
+router.patch('/updatePassword', isAuth, userControllers.updatePassword)
 
 
 module.exports = router
