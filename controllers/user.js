@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
 const User = require('../models/users')
-const {successHandler, errorHandler } = require('../service/responseHandler')
+const {successHandler} = require('../service/responseHandler')
 const {handleErrorAsync, appError} = require('../service/errorHandler')
 const { jwtGenerator } = require('../service/auth')
 const getUsers = handleErrorAsync(async function(req, res, next) {
@@ -97,7 +97,33 @@ const signUp = handleErrorAsync(async function(req, res, next) {
 })
 
 const signIn = handleErrorAsync(async function(req, res, next) {
-    const compareResult = await bcrypt.compare('aa1a', bcryptPassWord)
+    const {email, password} = req.body
+    if( !email || !password) {
+        return next(
+            appError( 400, '欄位不得為空', next)
+        )
+    }
+
+    if(!validator.isEmail(email)){
+        return next(appError(400, 'email 格式錯誤', next))
+    }
+
+    const user = await User.findOne({
+        email
+    }).select('+password')
+
+    if( user === null) {
+        return next(appError(400, '欄位填寫有誤', next))
+    }
+
+    const auth = await bcrypt.compare(password, user.password)
+
+    if(!auth){
+        return next(appError(400, '欄位填寫有誤', next))
+    }
+
+    jwtGenerator( user , 200, res )
+
 })
 
 
