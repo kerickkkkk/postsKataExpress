@@ -13,4 +13,9 @@ router.patch('/updatePassword', isAuth, userControllers.updatePassword)
 
 router.get('/likes', isAuth, userControllers.getLikes)
 
+router.post('/:id/follow', isAuth, userControllers.follow)
+router.delete('/:id/follow', isAuth, userControllers.unFollow)
+
+router.get('/follows', isAuth, userControllers.getFollows)
+
 module.exports = router

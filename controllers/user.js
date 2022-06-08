@@ -189,6 +189,85 @@ const getLikes = handleErrorAsync(async function(req, res, next) {
     
     successHandler( res, likes)
 })
+const follow = handleErrorAsync(async function(req, res, next) {
+    const followId = req.params.id
+
+    // 確認是否存在
+    const userExist = await User.exists({_id: followId}) 
+    if(userExist === null){
+        return next( appError( 404, '使用者不存在', next))
+    }
+    // addToSet 會有重複加入的問題
+
+    await User.updateOne(
+        {
+            _id: req.user.id,
+            'follows.user': { $ne: followId },
+        },
+        {
+            $push:{
+                follows: {user:followId}
+            }
+        }
+    )
+
+    await User.updateOne(
+        {
+            _id: followId ,
+            'followers.user': { $ne: req.user.id},
+        },
+        {
+            $push:{
+                followers: {user: req.user.id}
+            }
+        }
+    )
+
+
+    successHandler( res, {
+        userId: req.user.id,
+        followId
+    })
+})
+const unFollow = handleErrorAsync(async function(req, res, next) {
+    const followId = req.params.id
+    // 確認是否存在
+    const userExist = await User.exists({_id: followId}) 
+    if(userExist === null){
+        return next( appError( 404, '使用者不存在', next))
+    }
+    // addToSet 會有重複加入的問題
+
+    await User.findOneAndUpdate(
+        {
+            _id: req.user.id,
+        },
+        {
+            $pull:{
+                follows: { user : followId}
+            }
+        }
+    )
+
+    await User.findOneAndUpdate(
+        {
+            _id: followId,
+        },
+        {
+            $pull:{
+                followers: { user : req.user.id}
+            }
+        }
+    )
+    successHandler( res, {
+        userId: req.user.id,
+        followId
+    })
+})
+
+const getFollows = handleErrorAsync(async function(req, res, next) {
+})
+
 module.exports = {
     getUsers,
     signUp,
@@ -197,4 +276,7 @@ module.exports = {
     updatePassword,
     updateProfile,
     getLikes,
+    follow,
+    getFollows,
+    unFollow,
 }
