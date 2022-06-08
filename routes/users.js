@@ -11,5 +11,6 @@ router.get('/profile', isAuth , userControllers.getProfile)
 router.patch('/profile', isAuth, userControllers.updateProfile)
 router.patch('/updatePassword', isAuth, userControllers.updatePassword)
 
+router.get('/likes', isAuth, userControllers.getLikes)
 
 module.exports = router

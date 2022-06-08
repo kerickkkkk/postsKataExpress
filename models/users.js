@@ -33,12 +33,12 @@ const userSchema = new mongoose.Schema(
       default: Date.now,
       select: false
     },
-    likePosts:[
-      { 
-        type: mongoose.Schema.ObjectId, 
-        ref: 'post' 
-      }
-    ],
+    // likePosts:[
+    //   { 
+    //     type: mongoose.Schema.ObjectId, 
+    //     ref: 'post' 
+    //   }
+    // ],
   },
   {
     versionKey: false

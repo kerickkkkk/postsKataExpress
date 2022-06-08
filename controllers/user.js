@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs')
 const validator = require('validator')
 const User = require('../models/users')
+const Post = require('../models/post')
 const {successHandler} = require('../service/responseHandler')
 const {handleErrorAsync, appError} = require('../service/errorHandler')
 const { jwtGenerator } = require('../service/auth')
@@ -179,7 +180,15 @@ const updateProfile = handleErrorAsync(async function(req, res, next) {
     successHandler(res, user)
 
 })
-
+const getLikes = handleErrorAsync(async function(req, res, next) {
+    const likes = await Post.find({
+        likes: {
+            $in: [req.user.id]
+        }
+    })
+    
+    successHandler( res, likes)
+})
 module.exports = {
     getUsers,
     signUp,
@@ -187,4 +196,5 @@ module.exports = {
     getProfile,
     updatePassword,
     updateProfile,
+    getLikes,
 }
