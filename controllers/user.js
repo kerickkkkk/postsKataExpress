@@ -266,6 +266,31 @@ const unFollow = handleErrorAsync(async function(req, res, next) {
 })
 
 const getFollows = handleErrorAsync(async function(req, res, next) {
+    const id = req.user.id
+    // 是否要再過濾
+
+    if(!id){
+        return next(appError(404, '使用者不存在', next))
+    }
+    
+    const user = await User.findOne({_id: id})
+        .populate({
+            path: 'follows.user',
+            select: '_id name avatar'
+        })
+    if( !user ) {
+        return next(appError(404, '使用者不存在', next))
+    }
+
+    const follows = user.follows.map( follow => {
+        const {user, createdAt} = follow
+        const {_id, name, avatar} = user
+
+        return {
+            _id, name, avatar, createdAt 
+        }
+    })
+    successHandler( res, follows)
 })
 
 module.exports = {
