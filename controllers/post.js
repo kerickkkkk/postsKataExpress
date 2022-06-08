@@ -117,8 +117,7 @@ const deletePost = handleErrorAsync( async function(req, res, next){
         const {id} = req.params
         const findId = await Post.findOne({_id: {$in:[id]}})
         if(findId === null){
-            errorHandler(res, 404, '沒有該 Id')
-            return false 
+            return next(appError(400, '沒有該 Id', next))
         }
         const {_id} = await Post.findOneAndDelete({_id: id}, { runValidators: true  , new: true })
         successHandler(res, `已刪除ID : ${ _id}`)
