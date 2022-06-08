@@ -24,10 +24,19 @@ const postSchema = new mongoose.Schema(
       default: ''
     },
     // 被按讚
-    likes: {
-      type: [String],
-      default: []
-    },
+    likes:[
+      { 
+        type: mongoose.Schema.ObjectId, 
+        ref: 'user' 
+      }
+    ],
+    // 回復
+    comments:[
+      { 
+        type: mongoose.Schema.ObjectId, 
+        ref: 'comment' 
+      }
+    ],
     createdAt:{
       type: Date,
       default: Date.now,

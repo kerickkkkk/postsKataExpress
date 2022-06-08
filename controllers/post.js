@@ -4,6 +4,20 @@ const User = require('../models/users')
 const {successHandler } = require('../service/responseHandler')
 const { appError, handleErrorAsync } = require('../service/errorHandler.js')
 const getPost = handleErrorAsync( async function(req, res, next) {
+    const id = req.params.id
+    console.log(id);
+    if( !id ){
+        return next(appError( 400, '沒有文章 ID', next))
+    }
+    const post =  await Post.findOne({_id: id})
+    if( !post ){
+        return next(appError( 400, '沒有文章 ID', next))
+    }
+
+    successHandler(res, post)
+})
+
+const getPosts = handleErrorAsync( async function(req, res, next) {
     /*
         #swagger.tags = ['Posts - 貼文']
         #swagger.description = '這是取得全部貼文'
@@ -36,6 +50,7 @@ const getPost = handleErrorAsync( async function(req, res, next) {
     //     errorHandler(res, 400)
     // }
 })
+
 
 const postPost = handleErrorAsync( async function(req, res, next){
     /*
@@ -72,7 +87,10 @@ const postPost = handleErrorAsync( async function(req, res, next){
     // handleErrorAsync 集中 try catch 
     // try {
         const params = req.body
-        const { user :userId , content ,image = ''} = params
+        // const { user :userId , content ,image = ''} = params
+        // userId 改從 auth 送
+        const userId = req.user.id
+        const { content ,image = ''} = params
         if( !userId || !content) {
             // 寫法 v1.0
             // errorHandler( res, 400, '姓名 或者 內容不得為空')
@@ -148,11 +166,81 @@ const patchPost = handleErrorAsync( async function(req, res, next){
 
 })
 
+const likePost = handleErrorAsync( async function(req, res, next) {
+    const userId = req.user.id
+    const postId = req.params.id
+    if( !userId || !postId) {
+        return next(appError(400, '文章或使用者 id 有誤'))
+    }
+
+    const result = await Post.findByIdAndUpdate(
+        postId, 
+        {
+            $addToSet: {
+                likes : userId
+            }
+        }, 
+        { runValidators: true  , new: true }
+    )
+
+    if(result === null) {
+        return next( appError(404, '找不到文章', next))
+    }
+
+    successHandler( res, result)
+})
+
+const unlikePost = handleErrorAsync( async function(req, res, next) {
+    const userId = req.user.id
+    const postId = req.params.id
+    if( !userId || !postId) {
+        return next(appError(400, '文章或使用者 id 有誤'))
+    }
+
+    const result = await Post.findByIdAndUpdate(
+        postId, 
+        {
+            $pull: {
+                likes : userId
+            }
+        }, 
+        { runValidators: true  , new: true }
+    )
+
+    if(result === null) {
+        return next( appError(404, '找不到文章', next))
+    }
+
+    successHandler( res, result)
+})
+const userPosts = handleErrorAsync( async function(req, res, next) {
+    const userId = req.params.id
+
+    if( !userId ) {
+        return next(appError(400, '文章或使用者 id 有誤'))
+    }
+
+    const posts = await Post.find(
+        {user: userId}
+    )
+
+    if( !posts || posts.length === 0) {
+        return next( appError(404, '找不到文章', next))
+    }
+
+    successHandler( res, {
+        posts
+    })
+})
 
 module.exports = {
     getPost,
+    getPosts,
     postPost,
     deletePosts, 
     deletePost, 
     patchPost,
+    likePost,
+    unlikePost,
+    userPosts
 }
