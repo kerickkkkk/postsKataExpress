@@ -5,7 +5,7 @@ const {successHandler } = require('../service/responseHandler')
 const { appError, handleErrorAsync } = require('../service/errorHandler.js')
 const getPost = handleErrorAsync( async function(req, res, next) {
     const id = req.params.id
-    console.log(id);
+
     if( !id ){
         return next(appError( 400, '沒有文章 ID', next))
     }
@@ -233,6 +233,36 @@ const userPosts = handleErrorAsync( async function(req, res, next) {
     })
 })
 
+/*
+* 新增回復
+*/
+const comment = handleErrorAsync( async function(req, res, next) {
+    const userId = req.user.id
+    const postId = req.params.id
+    const {content} = req.body
+
+    if(!comment){
+        return next(appError(400, '回文不能為空', next))
+    }
+    // 是否都每次都要去資料庫撈取是否有 ID 
+    if(!postId || !userId){
+        return next(appError(400, '使用者或文章不存在', next))
+    }
+
+    const post = await Post.findByIdAndUpdate(
+        postId,
+        {
+            $push:{
+                comments: { user: userId, content}
+            }
+        },
+        { runValidators: true  , new: true }
+    )
+    if( !post) {
+        return next(appError(400, '沒有該使用者', next))
+    }
+    successHandler(res, post)
+})
 module.exports = {
     getPost,
     getPosts,
@@ -242,5 +272,6 @@ module.exports = {
     patchPost,
     likePost,
     unlikePost,
-    userPosts
+    userPosts,
+    comment
 }

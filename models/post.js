@@ -32,9 +32,25 @@ const postSchema = new mongoose.Schema(
     ],
     // 回復
     comments:[
-      { 
-        type: mongoose.Schema.ObjectId, 
-        ref: 'comment' 
+      {
+        user: {
+          type: mongoose.Schema.ObjectId,
+          ref:"user",
+          required: [true, '貼文 ID 未填寫']
+        },
+        content: {
+          type: String,
+          required: [ true, '內容不得為空']
+        },
+        createdAt:{
+          type: Date,
+          default: Date.now,
+          select: false
+        },
+        updatedAt:{
+          type: Date,
+          default: Date.now,
+        },
       }
     ],
     createdAt:{

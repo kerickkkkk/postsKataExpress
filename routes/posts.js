@@ -22,4 +22,7 @@ router.delete('/:id/like', postControllers.unlikePost)
 // 取得個人所有貼文
 router.get('/user/:id', postControllers.userPosts);
 
+// 新增回復
+router.post('/:id/comment', postControllers.comment)
+
 module.exports = router;

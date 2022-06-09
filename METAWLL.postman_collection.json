@@ -36,7 +36,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"name\": \"newUser2222\",\r\n  \"email\": \"test222@1.com\",\r\n  \"password\": \"88888888\",\r\n   \"confirmPassword\" : \"88888888\"\r\n}",
+							"raw": "{\r\n  \"name\": \"newUser99\",\r\n  \"email\": \"99@999.com\",\r\n  \"password\": \"88888888\",\r\n   \"confirmPassword\" : \"88888888\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -66,7 +66,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"email\": \"test222@1.com\",\r\n  \"password\": \"88888888\"\r\n}",
+							"raw": "{\r\n  \"email\": \"999@999.com\",\r\n  \"password\": \"88888888\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -96,7 +96,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWMyYTUwOGZlYzdmOTQyZTcyM2U1NyIsImlhdCI6MTY1NDQwMTYxNiwiZXhwIjoxNjU1MDA2NDE2fQ.7YuT7g79CzQOjxI-ErjlSwwzbB1AGztujt-8sdX9vpw",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -123,7 +123,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWMyYTUwOGZlYzdmOTQyZTcyM2U1NyIsImlhdCI6MTY1NDQwMTYxNiwiZXhwIjoxNjU1MDA2NDE2fQ.7YuT7g79CzQOjxI-ErjlSwwzbB1AGztujt-8sdX9vpw",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -159,7 +159,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWMyYTUwOGZlYzdmOTQyZTcyM2U1NyIsImlhdCI6MTY1NDQwMTYxNiwiZXhwIjoxNjU1MDA2NDE2fQ.7YuT7g79CzQOjxI-ErjlSwwzbB1AGztujt-8sdX9vpw",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -188,10 +188,10 @@
 			]
 		},
 		{
-			"name": "文章 posts",
+			"name": "動態貼文",
 			"item": [
 				{
-					"name": "取得所有 posts",
+					"name": "取得所有貼文",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -208,6 +208,24 @@
 					"response": []
 				},
 				{
+					"name": "取得單筆貼文",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts/628eff20dde68c51a417a890",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"628eff20dde68c51a417a890"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "新增單筆 post",
 					"protocolProfileBehavior": {
 						"disabledSystemHeaders": {}
@@ -217,7 +235,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"user\": \"6286d9a682e43469e9c657f8\",\r\n  \"content\": \"測試二號\",\r\n  \"image\": \"圖片不一定要傳\"\r\n",
+							"raw": "{\r\n  \"content\": \"測試3號\",\r\n  \"image\": \"圖片不一定要傳\"\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -259,13 +277,13 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/posts/629b1c8c43830b6a62ea96f",
+							"raw": "{{base_url}}/posts/628efe66dde68c51a417a884",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"posts",
-								"629b1c8c43830b6a62ea96f"
+								"628efe66dde68c51a417a884"
 							]
 						}
 					},
@@ -297,6 +315,257 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "移除貼文的讚",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/628eff20dde68c51a417a890/like",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"628eff20dde68c51a417a890",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增貼文的讚",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/628eff20dde68c51a417a890/like",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"628eff20dde68c51a417a890",
+								"like"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得使用者所有文章",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/posts/user/629c2a508fec7f942e723e57",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"user",
+								"629c2a508fec7f942e723e57"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "新增回文",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"測試回文\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/posts/62a0af15122ff71d3d63304a/comment",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"posts",
+								"62a0af15122ff71d3d63304a",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "會員按讚追蹤動態",
+			"item": [
+				{
+					"name": "取得個人按讚列表",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/likes",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"likes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "追蹤朋友",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/62a0b296d67112e1de2a3339/follow",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"62a0b296d67112e1de2a3339",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "移除追蹤朋友",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/62a0aa5305a579273595f25a/follow",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"62a0aa5305a579273595f25a",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "取得個人追蹤朋友",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/users/follows",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"users",
+								"follows"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -313,7 +582,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyOWMyYTUwOGZlYzdmOTQyZTcyM2U1NyIsImlhdCI6MTY1NDQwMTYxNiwiZXhwIjoxNjU1MDA2NDE2fQ.7YuT7g79CzQOjxI-ErjlSwwzbB1AGztujt-8sdX9vpw",
+								"value": "Bearer {{token}}",
 								"type": "text"
 							}
 						],
@@ -372,6 +641,11 @@
 		{
 			"key": "base_url",
 			"value": "https://postkataexpress.herokuapp.com",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyYTBhZDkzMTIyZmY3MWQzZDYzMzAyOCIsImlhdCI6MTY1NDY5NzU3MywiZXhwIjoxNjU1MzAyMzczfQ.0wUxNVEvDw-_4gasih4PboUVcg7ZSDPox8rhNFrJoXk",
 			"type": "string"
 		}
 	]
