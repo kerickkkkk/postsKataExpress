@@ -257,7 +257,10 @@ const comment = handleErrorAsync( async function(req, res, next) {
             }
         },
         { runValidators: true  , new: true }
-    )
+    ).populate({
+        path: 'comments.user',
+        select: 'name avatar'
+    })
     if( !post) {
         return next(appError(400, '沒有該使用者', next))
     }
