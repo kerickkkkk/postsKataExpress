@@ -1,6 +1,7 @@
 const { log } = require('debug/src/node')
 const Post = require('../models/post')
 const User = require('../models/users')
+const Comment = require('../models/comment')
 const {successHandler } = require('../service/responseHandler')
 const { appError, handleErrorAsync } = require('../service/errorHandler.js')
 const getPost = handleErrorAsync( async function(req, res, next) {
@@ -44,6 +45,9 @@ const getPosts = handleErrorAsync( async function(req, res, next) {
         const posts =  await Post.find().populate({
             path: 'user',
             select: 'name avatar'
+        }).populate({
+            path: 'comments',
+            select: 'comment user'
         })
         successHandler(res, posts)
     // } catch (error) {
@@ -239,7 +243,7 @@ const userPosts = handleErrorAsync( async function(req, res, next) {
 const comment = handleErrorAsync( async function(req, res, next) {
     const userId = req.user.id
     const postId = req.params.id
-    const {content} = req.body
+    const {comment} = req.body
 
     if(!comment){
         return next(appError(400, '回文不能為空', next))
@@ -249,18 +253,28 @@ const comment = handleErrorAsync( async function(req, res, next) {
         return next(appError(400, '使用者或文章不存在', next))
     }
 
-    const post = await Post.findByIdAndUpdate(
-        postId,
-        {
-            $push:{
-                comments: { user: userId, content}
-            }
-        },
-        { runValidators: true  , new: true }
-    ).populate({
-        path: 'comments.user',
-        select: 'name avatar'
+    const newComment = await Comment.create({
+        comment,
+        user: userId,
+        post: postId
     })
+
+    successHandler(res, {
+        comment: newComment
+    })
+    // const post = await Post.findByIdAndUpdate(
+    //     postId,
+    //     {
+    //         $push:{
+    //             comments: { user: userId, comment}
+    //         }
+    //     },
+    //     { runValidators: true  , new: true }
+    // ).populate({
+    //     path: 'user',
+    //     select: 'name avatar'
+    // })
+
     if( !post) {
         return next(appError(400, '沒有該使用者', next))
     }

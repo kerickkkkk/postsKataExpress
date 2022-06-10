@@ -30,29 +30,30 @@ const postSchema = new mongoose.Schema(
         ref: 'user' 
       }
     ],
-    // 回復
-    comments:[
-      {
-        user: {
-          type: mongoose.Schema.ObjectId,
-          ref:"user",
-          required: [true, '貼文 ID 未填寫']
-        },
-        content: {
-          type: String,
-          required: [ true, '內容不得為空']
-        },
-        createdAt:{
-          type: Date,
-          default: Date.now,
-          select: false
-        },
-        updatedAt:{
-          type: Date,
-          default: Date.now,
-        },
-      }
-    ],
+    // 因為可能過多 抽出去
+    // // 回復
+    // comments:[
+    //   {
+    //     user: {
+    //       type: mongoose.Schema.ObjectId,
+    //       ref:"user",
+    //       required: [true, '貼文 ID 未填寫']
+    //     },
+    //     content: {
+    //       type: String,
+    //       required: [ true, '內容不得為空']
+    //     },
+    //     createdAt:{
+    //       type: Date,
+    //       default: Date.now,
+    //       select: false
+    //     },
+    //     updatedAt:{
+    //       type: Date,
+    //       default: Date.now,
+    //     },
+    //   }
+    // ],
     createdAt:{
       type: Date,
       default: Date.now,
@@ -64,9 +65,18 @@ const postSchema = new mongoose.Schema(
     },
   },
   {
-    versionKey: false
+    versionKey: false,
+    toJSON: {virtuals: true},
+    toObject: {virtuals: true}
   }
 )
+
+// 使用 virtual 的方式掛載
+postSchema.virtual('comments',{
+  ref: 'comment',
+  foreignField: 'post',
+  localField: '_id'
+})
 
 const Post = mongoose.model( 'post', postSchema )
 
